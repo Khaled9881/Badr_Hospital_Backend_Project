@@ -1,5 +1,7 @@
+using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Billing;
 using HospitalManagementSystem.Domain.Clinical;
+using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Departments;
 using HospitalManagementSystem.Domain.Doctors;
 using HospitalManagementSystem.Domain.Lab;
@@ -10,6 +12,7 @@ using HospitalManagementSystem.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace HospitalManagementSystem.Infrastructure.Persistence
@@ -87,6 +90,67 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
             modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
             modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
+
+            // ISoftDelete global query filter - applied by reflection to every
+            // entity that implements it, so new soft-deletable entities need
+            // zero extra config here: just implement ISoftDelete on the class.
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+                {
+                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var property = Expression.Property(parameter, nameof(ISoftDelete.IsDeleted));
+                    var condition = Expression.Equal(property, Expression.Constant(false));
+                    var lambda = Expression.Lambda(condition, parameter);
+
+                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+                }
+
+                // IHasRowVersion optimistic concurrency token - same reflection
+                // pattern, so new concurrency-sensitive entities just implement
+                // the interface and get IsRowVersion() wired up automatically.
+                if (typeof(IHasRowVersion).IsAssignableFrom(entityType.ClrType))
+                {
+                    modelBuilder.Entity(entityType.ClrType)
+                        .Property(nameof(IHasRowVersion.RowVersion))
+                        .IsRowVersion();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Intercepts hard deletes on any ISoftDelete entity and converts them
+        /// into a flag update instead. Call SaveChanges/SaveChangesAsync as normal
+        /// everywhere else in the app - this runs transparently.
+        /// </summary>
+        private void SoftenDeletes()
+        {
+            if (!ChangeTracker.HasChanges())
+                return;
+
+            foreach (var entry in ChangeTracker.Entries<ISoftDelete>())
+            {
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.DeletedAt = DateTime.UtcNow;
+                }
+            }
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            SoftenDeletes();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(
+            bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
+        {
+            SoftenDeletes();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }

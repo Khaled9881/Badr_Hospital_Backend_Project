@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Doctors;
@@ -9,7 +10,7 @@ namespace HospitalManagementSystem.Domain.Pharmacy
     /// Business rule: a Prescription is immutable once issued (no edit) -
     /// enforce this in the application/service layer, not on the entity itself.
     /// </summary>
-    public class Prescription : BaseEntity
+    public class Prescription : BaseEntity, IHasRowVersion
     {
         public Guid ConsultationId { get; set; }
         public Guid PatientId { get; set; }
@@ -17,6 +18,8 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public string Status { get; set; } = string.Empty; // e.g. Issued, PartiallyDispensed, Dispensed, Cancelled
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string Notes { get; set; } = string.Empty;
+
+        public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 
         // Navigation
         public Consultation Consultation { get; set; } = null!;

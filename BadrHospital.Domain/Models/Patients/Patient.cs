@@ -6,7 +6,7 @@ using HospitalManagementSystem.Domain.Pharmacy;
 
 namespace HospitalManagementSystem.Domain.Patients
 {
-    public class Patient : BaseEntity
+    public class Patient : BaseEntity, ISoftDelete
     {
         // FK - optional link to portal login (0..1 per ERD).
         // Plain Guid on purpose: Domain must not reference the Infrastructure-layer
@@ -30,5 +30,7 @@ namespace HospitalManagementSystem.Domain.Patients
         public ICollection<LabOrder> LabOrders { get; set; } = new List<LabOrder>();
         public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
         public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
+        bool ISoftDelete.IsDeleted { get; set; }
+        DateTime? ISoftDelete.DeletedAt { get; set; }
     }
 }

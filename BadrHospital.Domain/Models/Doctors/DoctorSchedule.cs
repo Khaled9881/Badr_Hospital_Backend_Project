@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Common;
 
 namespace HospitalManagementSystem.Domain.Doctors
@@ -5,7 +6,7 @@ namespace HospitalManagementSystem.Domain.Doctors
     /// <summary>
     /// One-to-many: a Doctor's weekly recurring availability slots.
     /// </summary>
-    public class DoctorSchedule : BaseEntity
+    public class DoctorSchedule : BaseEntity, IHasRowVersion
     {
         public Guid DoctorId { get; set; }
         public string DayOfWeek { get; set; } = string.Empty;
@@ -15,5 +16,6 @@ namespace HospitalManagementSystem.Domain.Doctors
 
         // Navigation
         public Doctor Doctor { get; set; } = null!;
+        public byte[] RowVersion { get; set; } = Array.Empty<byte>();
     }
 }

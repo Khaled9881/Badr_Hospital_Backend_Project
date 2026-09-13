@@ -68,6 +68,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
                 .WithOne(p => p.Doctor)
                 .HasForeignKey(p => p.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasQueryFilter(u => u.IsActive);
+
+
         }
     }
 }

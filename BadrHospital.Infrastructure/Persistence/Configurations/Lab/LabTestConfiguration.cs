@@ -18,6 +18,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Lab
             builder.Property(t => t.IsActive).HasDefaultValue(true);
 
             builder.HasIndex(t => t.Name).IsUnique();
+
+            builder.HasQueryFilter(u => u.IsActive);
+
+
         }
     }
 }

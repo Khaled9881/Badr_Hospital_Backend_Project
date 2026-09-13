@@ -1,15 +1,18 @@
+using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Patients;
 
 namespace HospitalManagementSystem.Domain.Billing
 {
-    public class Invoice : BaseEntity
+    public class Invoice : BaseEntity, IHasRowVersion
     {
         public Guid PatientId { get; set; }
         public string InvoiceNumber { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string Status { get; set; } = string.Empty; // e.g. Draft, Issued, Paid, Overdue, Cancelled
         public decimal TotalAmount { get; set; }
+
+        public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 
         // Navigation
         public Patient Patient { get; set; } = null!;

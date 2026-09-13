@@ -8,7 +8,8 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
     {
         public void Configure(EntityTypeBuilder<DoctorSchedule> builder)
         {
-            builder.ToTable("DoctorSchedules");
+            builder.ToTable("DoctorSchedules", t =>
+            t.HasCheckConstraint("CK_DoctorSchedule_EndTime_GreaterThan_StartTime", "[EndTime] > [StartTime]"));
 
             builder.HasKey(s => s.Id);
 
@@ -16,6 +17,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
             builder.Property(s => s.IsActive).HasDefaultValue(true);
 
             builder.HasIndex(s => new { s.DoctorId, s.DayOfWeek, s.StartTime }).IsUnique();
+
+            builder.HasQueryFilter(u => u.IsActive);
+
+
         }
     }
 }

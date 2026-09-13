@@ -31,6 +31,9 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Ide
 
             // ApplicationUser <-> Patient / Doctor (0..1, configured from the
             // dependent side - see PatientConfiguration / DoctorConfiguration).
+
+            builder.HasQueryFilter(u => u.IsActive);
+
         }
     }
 }

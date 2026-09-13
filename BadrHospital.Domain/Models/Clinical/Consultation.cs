@@ -6,7 +6,7 @@ using HospitalManagementSystem.Domain.Pharmacy;
 
 namespace HospitalManagementSystem.Domain.Clinical
 {
-    public class Consultation : BaseEntity
+    public class Consultation : BaseEntity, ISoftDelete
     {
         public Guid AppointmentId { get; set; }
         public Guid DoctorId { get; set; }
@@ -15,6 +15,9 @@ namespace HospitalManagementSystem.Domain.Clinical
         public DateTime? CompletedAt { get; set; }
         public string Symptoms { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
+
+        bool ISoftDelete.IsDeleted { get; set; }
+        DateTime? ISoftDelete.DeletedAt { get; set; }
 
         // Navigation
         public Appointment Appointment { get; set; } = null!;

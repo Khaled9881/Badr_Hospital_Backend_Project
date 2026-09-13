@@ -5,7 +5,7 @@ using HospitalManagementSystem.Domain.Patients;
 
 namespace HospitalManagementSystem.Domain.Lab
 {
-    public class LabOrder : BaseEntity
+    public class LabOrder : BaseEntity, ISoftDelete
     {
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
@@ -13,6 +13,9 @@ namespace HospitalManagementSystem.Domain.Lab
         public string Status { get; set; } = string.Empty; // e.g. Ordered, InProgress, Completed, Cancelled
         public DateTime OrderedAt { get; set; } = DateTime.UtcNow;
         public string Notes { get; set; } = string.Empty;
+
+        bool ISoftDelete.IsDeleted { get; set; }
+        DateTime? ISoftDelete.DeletedAt { get; set; }
 
         // Navigation
         public Patient Patient { get; set; } = null!;
