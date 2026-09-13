@@ -12,7 +12,6 @@
 
 	<ItemGroup>
 		<Folder Include="Data\" />
-		<Folder Include="Configurations\" />
 		<Folder Include="DataSeeding\" />
 		<Folder Include="Services\" />
 	</ItemGroup>
