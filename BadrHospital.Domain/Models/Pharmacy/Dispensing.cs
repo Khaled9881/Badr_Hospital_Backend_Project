@@ -1,5 +1,4 @@
 using HospitalManagementSystem.Domain.Common;
-using HospitalManagementSystem.Domain.Identity;
 
 namespace HospitalManagementSystem.Domain.Pharmacy
 {
@@ -9,13 +8,18 @@ namespace HospitalManagementSystem.Domain.Pharmacy
     public class Dispensing : BaseEntity
     {
         public Guid PrescriptionId { get; set; }
-        public Guid PharmacistId { get; set; } // References the pharmacist's ApplicationUser Id
+
+        // Plain Guid on purpose - references the pharmacist's ApplicationUser Id,
+        // but Domain can't hold a navigation property to ApplicationUser
+        // (that type lives in Infrastructure). Configured one-directionally
+        // from DispensingConfiguration on the Infrastructure side.
+        public Guid PharmacistId { get; set; }
+
         public DateTime DispensedAt { get; set; } = DateTime.UtcNow;
         public string Notes { get; set; } = string.Empty;
 
         // Navigation
         public Prescription Prescription { get; set; } = null!;
-        public ApplicationUser Pharmacist { get; set; } = null!;
         public ICollection<DispensingItem> DispensingItems { get; set; } = new List<DispensingItem>();
     }
 }

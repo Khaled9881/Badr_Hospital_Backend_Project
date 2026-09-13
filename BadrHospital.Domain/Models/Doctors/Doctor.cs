@@ -1,7 +1,6 @@
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Departments;
-using HospitalManagementSystem.Domain.Identity;
 using HospitalManagementSystem.Domain.Lab;
 using HospitalManagementSystem.Domain.Pharmacy;
 
@@ -9,7 +8,8 @@ namespace HospitalManagementSystem.Domain.Doctors
 {
     public class Doctor : BaseEntity
     {
-        // FK - optional link to portal login (0..1 per ERD)
+        // FK - optional link to portal login (0..1 per ERD).
+        // Plain Guid on purpose - see the note on Patient.ApplicationUserId.
         public Guid? ApplicationUserId { get; set; }
 
         public string FirstName { get; set; } = string.Empty;
@@ -23,7 +23,6 @@ namespace HospitalManagementSystem.Domain.Doctors
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation
-        public ApplicationUser? ApplicationUser { get; set; }
         public ICollection<DoctorDepartment> DoctorDepartments { get; set; } = new List<DoctorDepartment>();
         public ICollection<DoctorSchedule> Schedules { get; set; } = new List<DoctorSchedule>();
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();

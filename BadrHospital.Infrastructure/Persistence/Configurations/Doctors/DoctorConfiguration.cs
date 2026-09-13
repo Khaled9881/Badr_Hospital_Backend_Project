@@ -1,4 +1,5 @@
 using HospitalManagementSystem.Domain.Doctors;
+using HospitalManagementSystem.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,7 +30,8 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
                 .IsUnique()
                 .HasFilter("[ApplicationUserId] IS NOT NULL");
 
-            builder.HasOne(d => d.ApplicationUser)
+            // No navigation on Doctor - see the same note in PatientConfiguration.
+            builder.HasOne<ApplicationUser>()
                 .WithOne(u => u.Doctor)
                 .HasForeignKey<Doctor>(d => d.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict);

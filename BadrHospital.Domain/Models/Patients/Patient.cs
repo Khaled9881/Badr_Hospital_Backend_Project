@@ -1,7 +1,6 @@
 using HospitalManagementSystem.Domain.Billing;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
-using HospitalManagementSystem.Domain.Identity;
 using HospitalManagementSystem.Domain.Lab;
 using HospitalManagementSystem.Domain.Pharmacy;
 
@@ -9,7 +8,10 @@ namespace HospitalManagementSystem.Domain.Patients
 {
     public class Patient : BaseEntity
     {
-        // FK - optional link to portal login (0..1 per ERD)
+        // FK - optional link to portal login (0..1 per ERD).
+        // Plain Guid on purpose: Domain must not reference the Infrastructure-layer
+        // ApplicationUser type. No navigation property here - the relationship
+        // is configured from the Infrastructure side (PatientConfiguration).
         public Guid? ApplicationUserId { get; set; }
 
         public string MedicalRecordNumber { get; set; } = string.Empty;
@@ -22,7 +24,6 @@ namespace HospitalManagementSystem.Domain.Patients
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation
-        public ApplicationUser? ApplicationUser { get; set; }
         public ICollection<EmergencyContact> EmergencyContacts { get; set; } = new List<EmergencyContact>();
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public ICollection<Consultation> Consultations { get; set; } = new List<Consultation>();

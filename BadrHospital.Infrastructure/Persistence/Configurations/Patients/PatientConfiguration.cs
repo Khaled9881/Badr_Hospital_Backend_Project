@@ -1,4 +1,5 @@
 using HospitalManagementSystem.Domain.Patients;
+using HospitalManagementSystem.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -32,7 +33,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Pat
                 .IsUnique()
                 .HasFilter("[ApplicationUserId] IS NOT NULL");
 
-            builder.HasOne(p => p.ApplicationUser)
+            // No navigation on Patient (Domain can't reference ApplicationUser,
+            // which lives in Infrastructure) - HasOne<T>() with no expression
+            // configures a one-directional relationship using just the FK.
+            builder.HasOne<ApplicationUser>()
                 .WithOne(u => u.Patient)
                 .HasForeignKey<Patient>(p => p.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict);
