@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Enums;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Doctors;
@@ -10,7 +11,7 @@ namespace HospitalManagementSystem.Domain.Lab
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
         public Guid ConsultationId { get; set; }
-        public string Status { get; set; } = string.Empty; // e.g. Ordered, InProgress, Completed, Cancelled
+        public LabOrderStatus Status { get; set; }
         public DateTime OrderedAt { get; set; } = DateTime.UtcNow;
         public string Notes { get; set; } = string.Empty;
 

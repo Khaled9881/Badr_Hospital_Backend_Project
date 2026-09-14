@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Enums;
 using HospitalManagementSystem.Domain.Common;
 
 namespace HospitalManagementSystem.Domain.Notifications
@@ -10,7 +11,7 @@ namespace HospitalManagementSystem.Domain.Notifications
         // ApplicationUserConfiguration on the Infrastructure side.
         public Guid UserId { get; set; }
 
-        public string Type { get; set; } = string.Empty; // e.g. Appointment, Prescription, LabResult, Billing
+        public NotificationType Type { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
         public bool IsRead { get; set; }

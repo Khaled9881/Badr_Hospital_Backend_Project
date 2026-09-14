@@ -12,7 +12,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Pha
 
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Status).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Status)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
             builder.Property(p => p.CreatedAt).IsRequired();
             builder.Property(p => p.Notes).HasMaxLength(1000);
 

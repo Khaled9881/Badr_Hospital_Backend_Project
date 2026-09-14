@@ -14,7 +14,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Bil
 
             builder.Property(i => i.InvoiceNumber).IsRequired().HasMaxLength(50);
             builder.Property(i => i.CreatedAt).IsRequired();
-            builder.Property(i => i.Status).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Status)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
             builder.Property(i => i.TotalAmount).HasColumnType("decimal(18,2)");
 
             builder.HasIndex(i => i.InvoiceNumber).IsUnique();

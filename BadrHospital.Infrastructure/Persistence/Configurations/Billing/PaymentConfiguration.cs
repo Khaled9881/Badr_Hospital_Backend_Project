@@ -13,8 +13,14 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Bil
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Amount).HasColumnType("decimal(18,2)");
-            builder.Property(p => p.PaymentMethod).IsRequired().HasMaxLength(30);
-            builder.Property(p => p.Status).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.PaymentMethod)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
+            builder.Property(x => x.Status)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
 
             builder.HasIndex(p => p.InvoiceId);
         }

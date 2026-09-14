@@ -12,7 +12,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Lab
 
             builder.HasKey(o => o.Id);
 
-            builder.Property(o => o.Status).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Status)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
             builder.Property(o => o.OrderedAt).IsRequired();
             builder.Property(o => o.Notes).HasMaxLength(1000);
 

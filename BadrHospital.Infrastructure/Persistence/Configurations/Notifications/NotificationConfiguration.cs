@@ -12,7 +12,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Not
 
             builder.HasKey(n => n.Id);
 
-            builder.Property(n => n.Type).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Type)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
             builder.Property(n => n.Title).IsRequired().HasMaxLength(200);
             builder.Property(n => n.Message).IsRequired().HasMaxLength(2000);
             builder.Property(n => n.IsRead).HasDefaultValue(false);

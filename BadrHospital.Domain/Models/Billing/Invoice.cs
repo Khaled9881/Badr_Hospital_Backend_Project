@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Enums;
 using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Patients;
@@ -9,7 +10,7 @@ namespace HospitalManagementSystem.Domain.Billing
         public Guid PatientId { get; set; }
         public string InvoiceNumber { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public string Status { get; set; } = string.Empty; // e.g. Draft, Issued, Paid, Overdue, Cancelled
+        public InvoiceStatus Status { get; set; }
         public decimal TotalAmount { get; set; }
 
         public byte[] RowVersion { get; set; } = Array.Empty<byte>();

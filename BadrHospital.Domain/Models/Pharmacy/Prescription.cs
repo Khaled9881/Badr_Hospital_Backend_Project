@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Enums;
 using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
@@ -15,7 +16,7 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public Guid ConsultationId { get; set; }
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
-        public string Status { get; set; } = string.Empty; // e.g. Issued, PartiallyDispensed, Dispensed, Cancelled
+        public PrescriptionStatus Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string Notes { get; set; } = string.Empty;
 

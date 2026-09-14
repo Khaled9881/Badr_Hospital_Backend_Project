@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Enums;
 using BadrHospital.Domain.Models.Common;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Doctors;
@@ -11,7 +12,7 @@ namespace HospitalManagementSystem.Domain.Clinical
         public Guid DoctorId { get; set; }
         public DateTime AppointmentDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public string Status { get; set; } = string.Empty; // e.g. Scheduled, Completed, Cancelled, NoShow
+        public AppointmentStatus Status { get; set; }
         public string Reason { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

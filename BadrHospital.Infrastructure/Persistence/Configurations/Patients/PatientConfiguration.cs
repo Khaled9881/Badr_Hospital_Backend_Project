@@ -19,7 +19,10 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Pat
 
             builder.Property(p => p.FirstName).IsRequired().HasMaxLength(100);
             builder.Property(p => p.LastName).IsRequired().HasMaxLength(100);
-            builder.Property(p => p.Gender).HasMaxLength(20);
+            builder.Property(x => x.Gender)
+                            .HasConversion<string>()
+                            .HasMaxLength(30)
+                            .IsRequired();
             builder.Property(p => p.PhoneNumber).HasMaxLength(20);
             builder.Property(p => p.Address).HasMaxLength(500);
             builder.Property(p => p.CreatedAt).IsRequired();
