@@ -1,4 +1,5 @@
 using BadrHospital.Domain.Models.Common;
+using BadrHospital.Domain.Models.Doctors;
 using HospitalManagementSystem.Domain.Billing;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
@@ -41,6 +42,8 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
         public DbSet<DoctorSchedule> DoctorSchedules => Set<DoctorSchedule>();
         public DbSet<Department> Departments => Set<Department>();
         public DbSet<Specialization> Specializations => Set<Specialization>();
+
+        public DbSet<DoctorSpecialization> DoctorSpecializations => Set<DoctorSpecialization>();
 
         // Clinical
         public DbSet<Appointment> Appointments => Set<Appointment>();

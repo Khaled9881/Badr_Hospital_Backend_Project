@@ -69,6 +69,12 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
                 .HasForeignKey(p => p.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(d => d.DoctorSpecializations)
+                .WithOne(ds => ds.Doctor)
+                .HasForeignKey(ds => ds.DoctorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
             builder.HasQueryFilter(u => u.IsActive);
 
 

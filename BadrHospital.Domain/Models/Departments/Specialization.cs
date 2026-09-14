@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Models.Doctors;
 using HospitalManagementSystem.Domain.Common;
 
 namespace HospitalManagementSystem.Domain.Departments
@@ -16,5 +17,7 @@ namespace HospitalManagementSystem.Domain.Departments
 
         // Navigation
         public Department Department { get; set; } = null!;
+
+        public ICollection<DoctorSpecialization> DoctorSpecializations { get; set; } = new List<DoctorSpecialization>();
     }
 }

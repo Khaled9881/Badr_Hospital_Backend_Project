@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Models.Doctors;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
 using HospitalManagementSystem.Domain.Departments;
@@ -29,5 +30,7 @@ namespace HospitalManagementSystem.Domain.Doctors
         public ICollection<Consultation> Consultations { get; set; } = new List<Consultation>();
         public ICollection<LabOrder> LabOrders { get; set; } = new List<LabOrder>();
         public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+
+        public ICollection<DoctorSpecialization> DoctorSpecializations { get; set; } = new List<DoctorSpecialization>();
     }
 }
