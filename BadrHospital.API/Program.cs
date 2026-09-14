@@ -1,12 +1,16 @@
 
 using BadrHospital.Application.Behaviors;
+using BadrHospital.Infrastructure.Identity;
 using FluentValidation;
+using HospitalManagementSystem.Infrastructure.Persistence;
+using HospitalManagementSystem.Infrastructure.Persistence.Seeding;
+using Microsoft.EntityFrameworkCore;
 
 namespace BadrHospital.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +33,15 @@ namespace BadrHospital.API
 
 
             var app = builder.Build();
+
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await IdentitySeeder.SeedRolesAndAdminAsync(services);
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                await DataSeeder.SeedAsync(context);
+            }
 
             if (app.Environment.IsDevelopment())
             {

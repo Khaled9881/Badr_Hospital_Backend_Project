@@ -13,6 +13,7 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public DateTime ExpirationDate { get; set; }
         public int Quantity { get; set; }
         public decimal PurchasePrice { get; set; }
+        public decimal SellingPrice { get; set; }
 
         bool ISoftDelete.IsDeleted { get; set; }
         DateTime? ISoftDelete.DeletedAt { get; set; }

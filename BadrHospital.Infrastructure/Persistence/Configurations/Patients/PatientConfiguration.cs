@@ -25,6 +25,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Pat
             builder.Property(p => p.CreatedAt).IsRequired();
 
             builder.HasIndex(p => p.MedicalRecordNumber).IsUnique();
+            builder.HasIndex(p => p.PhoneNumber).IsUnique();
 
             // Patient <-> ApplicationUser (0..1, optional portal login)
             // Filtered so multiple patients with a NULL ApplicationUserId don't collide

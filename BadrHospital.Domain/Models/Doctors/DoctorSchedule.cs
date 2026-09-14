@@ -9,7 +9,7 @@ namespace HospitalManagementSystem.Domain.Doctors
     public class DoctorSchedule : BaseEntity, IHasRowVersion
     {
         public Guid DoctorId { get; set; }
-        public string DayOfWeek { get; set; } = string.Empty;
+        public DayOfWeek DayOfWeek { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public bool IsActive { get; set; } = true;

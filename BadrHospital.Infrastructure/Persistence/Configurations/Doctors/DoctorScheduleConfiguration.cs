@@ -16,7 +16,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
             builder.Property(s => s.DayOfWeek).IsRequired().HasMaxLength(20);
             builder.Property(s => s.IsActive).HasDefaultValue(true);
 
-            builder.HasIndex(s => new { s.DoctorId, s.DayOfWeek, s.StartTime }).IsUnique();
+            builder.HasIndex(s => new { s.DoctorId, s.DayOfWeek, s.StartTime, s.EndTime }).IsUnique();
 
             builder.HasQueryFilter(u => u.IsActive);
 
