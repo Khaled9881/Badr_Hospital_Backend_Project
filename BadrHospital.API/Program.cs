@@ -1,5 +1,7 @@
 
+using BadrHospital.API.Middlewares;
 using BadrHospital.Application.Behaviors;
+using BadrHospital.Application.Common.Exceptions;
 using BadrHospital.Infrastructure.Identity;
 using FluentValidation;
 using HospitalManagementSystem.Infrastructure.Persistence;
@@ -32,9 +34,18 @@ namespace BadrHospital.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+            {
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+            });
+
 
             var app = builder.Build();
 
+            app.UseExceptionHandler();
 
             using (var scope = app.Services.CreateScope())
             {

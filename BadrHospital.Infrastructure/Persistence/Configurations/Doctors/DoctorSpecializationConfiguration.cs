@@ -1,9 +1,6 @@
 ﻿using BadrHospital.Domain.Models.Doctors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BadrHospital.Infrastructure.Persistence.Configurations.Doctors
 {

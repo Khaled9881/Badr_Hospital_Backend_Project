@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BadrHospital.Application.Exceptions
+namespace BadrHospital.Application.Common.Exceptions
 {
     public class ValidationException : Exception
     {

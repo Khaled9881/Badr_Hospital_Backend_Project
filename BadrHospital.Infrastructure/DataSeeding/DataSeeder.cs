@@ -1,3 +1,4 @@
+using BadrHospital.Infrastructure.DataSeeding;
 using BadrHospital.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

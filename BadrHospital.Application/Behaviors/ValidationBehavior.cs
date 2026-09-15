@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using BadrHospital.Application.Common.Exceptions;
 
 namespace BadrHospital.Application.Behaviors
 {
@@ -19,7 +20,7 @@ namespace BadrHospital.Application.Behaviors
                 .Where(err => err is not null)
                 .ToList();
 
-            if (failures.Count != 0) throw new Exceptions.ValidationException(failures);
+            if (failures.Count != 0) throw new BadrHospital.Application.Common.Exceptions.ValidationException(failures);
 
             return await next(cancellationToken);
         }
