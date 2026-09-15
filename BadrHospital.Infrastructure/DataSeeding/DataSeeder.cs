@@ -1,4 +1,7 @@
+using BadrHospital.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalManagementSystem.Infrastructure.Persistence.Seeding
 {
@@ -20,11 +23,21 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Seeding
     /// </summary>
     public static class DataSeeder
     {
-        public static async Task SeedAsync(ApplicationDbContext context)
+        private static ApplicationDbContext? _context { get; set; }
+        public static async Task SeedAsync(IServiceProvider services)
         {
-            await SeedDepartmentsAndSpecializationsAsync(context);
-            await SeedLabTestsAsync(context);
-            await SeedMedicinesAsync(context);
+            _context = services.GetRequiredService<ApplicationDbContext>();
+
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            await RoleSeedData.SeedAsync(roleManager);
+
+            await IdentitySeeder.SeedRolesAndAdminAsync(services);
+
+
+            await SeedDepartmentsAndSpecializationsAsync(_context);
+            await SeedLabTestsAsync(_context);
+            await SeedMedicinesAsync(_context);
+
         }
 
         private static async Task SeedDepartmentsAndSpecializationsAsync(ApplicationDbContext context)

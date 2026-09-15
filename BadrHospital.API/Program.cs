@@ -4,6 +4,7 @@ using BadrHospital.Infrastructure.Identity;
 using FluentValidation;
 using HospitalManagementSystem.Infrastructure.Persistence;
 using HospitalManagementSystem.Infrastructure.Persistence.Seeding;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BadrHospital.API
@@ -38,9 +39,8 @@ namespace BadrHospital.API
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                await IdentitySeeder.SeedRolesAndAdminAsync(services);
-                var context = services.GetRequiredService<ApplicationDbContext>();
-                await DataSeeder.SeedAsync(context);
+
+                await DataSeeder.SeedAsync(services);
             }
 
             if (app.Environment.IsDevelopment())
