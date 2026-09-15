@@ -15,8 +15,8 @@ namespace HospitalManagementSystem.Domain.Lab
         public DateTime OrderedAt { get; set; } = DateTime.UtcNow;
         public string Notes { get; set; } = string.Empty;
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public Patient Patient { get; set; } = null!;

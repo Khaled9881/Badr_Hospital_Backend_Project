@@ -16,8 +16,8 @@ namespace HospitalManagementSystem.Domain.Clinical
         public string Symptoms { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public Appointment Appointment { get; set; } = null!;

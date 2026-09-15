@@ -13,8 +13,8 @@ namespace HospitalManagementSystem.Domain.Clinical
         public string Description { get; set; } = string.Empty;
         public bool IsPrimary { get; set; }
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public Consultation Consultation { get; set; } = null!;

@@ -13,8 +13,8 @@ namespace HospitalManagementSystem.Domain.Doctors
         public DateTime JoinedAt { get; set; } = DateTime.UtcNow;
         public bool IsPrimary { get; set; }
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public Doctor Doctor { get; set; } = null!;

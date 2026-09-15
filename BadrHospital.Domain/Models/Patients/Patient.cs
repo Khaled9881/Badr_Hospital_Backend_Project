@@ -24,6 +24,9 @@ namespace HospitalManagementSystem.Domain.Patients
         public string Address { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+
         // Navigation
         public ICollection<EmergencyContact> EmergencyContacts { get; set; } = new List<EmergencyContact>();
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
@@ -31,7 +34,6 @@ namespace HospitalManagementSystem.Domain.Patients
         public ICollection<LabOrder> LabOrders { get; set; } = new List<LabOrder>();
         public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
         public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+
     }
 }

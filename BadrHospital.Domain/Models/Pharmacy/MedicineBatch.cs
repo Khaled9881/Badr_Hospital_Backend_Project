@@ -15,8 +15,8 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public decimal PurchasePrice { get; set; }
         public decimal SellingPrice { get; set; }
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 

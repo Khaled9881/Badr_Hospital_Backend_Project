@@ -13,8 +13,8 @@ namespace HospitalManagementSystem.Domain.Patients
         public string PhoneNumber { get; set; } = string.Empty;
         public bool IsPrimary { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public Patient Patient { get; set; } = null!;

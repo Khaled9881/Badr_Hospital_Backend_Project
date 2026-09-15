@@ -17,8 +17,8 @@ namespace HospitalManagementSystem.Domain.Clinical
         public string Notes { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 

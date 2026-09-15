@@ -13,8 +13,8 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public string Strength { get; set; } = string.Empty;
         public string Manufacturer { get; set; } = string.Empty;
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public ICollection<MedicineBatch> Batches { get; set; } = new List<MedicineBatch>();

@@ -12,8 +12,8 @@ namespace HospitalManagementSystem.Domain.Departments
         public string Description { get; set; } = string.Empty;
         public Guid DepartmentId { get; set; }
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public Department Department { get; set; } = null!;

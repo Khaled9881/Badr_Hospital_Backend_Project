@@ -8,8 +8,8 @@ namespace HospitalManagementSystem.Domain.Departments
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public ICollection<DoctorDepartment> DoctorDepartments { get; set; } = new List<DoctorDepartment>();

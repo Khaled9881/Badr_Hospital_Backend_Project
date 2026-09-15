@@ -12,8 +12,8 @@ namespace HospitalManagementSystem.Domain.Lab
         public Guid LabTestId { get; set; }
         public string Notes { get; set; } = string.Empty;
 
-        bool ISoftDelete.IsDeleted { get; set; }
-        DateTime? ISoftDelete.DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         // Navigation
         public LabOrder LabOrder { get; set; } = null!;
