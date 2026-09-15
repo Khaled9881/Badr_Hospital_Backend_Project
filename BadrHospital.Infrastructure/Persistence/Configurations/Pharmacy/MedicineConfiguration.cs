@@ -17,6 +17,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Pha
             builder.Property(m => m.DosageForm).HasMaxLength(50);
             builder.Property(m => m.Strength).HasMaxLength(50);
             builder.Property(m => m.Manufacturer).HasMaxLength(200);
+            builder.Property(m => m.SellingPrice).HasColumnType("decimal(18,2)");
 
             builder.HasIndex(m => m.Name);
 

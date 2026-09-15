@@ -25,6 +25,8 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Doc
             builder.HasIndex(d => d.LicenseNumber).IsUnique();
             builder.HasIndex(d => d.Email).IsUnique();
 
+            builder.Property(d => d.ConsultationFee).HasColumnType("decimal(18,2)");
+
             // Doctor <-> ApplicationUser (0..1, optional portal login)
             builder.HasIndex(d => d.ApplicationUserId)
                 .IsUnique()

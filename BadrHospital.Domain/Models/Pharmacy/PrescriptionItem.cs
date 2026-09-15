@@ -7,8 +7,12 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public Guid PrescriptionId { get; set; }
         public Guid MedicineId { get; set; }
         public string Dosage { get; set; } = string.Empty;
+        //public decimal DoseAmount { get; set; }                    
+        //public string DoseUnit { get; set; } = string.Empty;
         public string Frequency { get; set; } = string.Empty;
+        //public int TimesPerDay { get; set; }
         public string Duration { get; set; } = string.Empty;
+        //public int DurationInDays { get; set; }
         public string Instructions { get; set; } = string.Empty;
         public int Quantity { get; set; }
 

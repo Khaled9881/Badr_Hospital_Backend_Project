@@ -23,6 +23,8 @@ namespace HospitalManagementSystem.Domain.Doctors
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public decimal ConsultationFee { get; set; }
+
         // Navigation
         public ICollection<DoctorDepartment> DoctorDepartments { get; set; } = new List<DoctorDepartment>();
         public ICollection<DoctorSchedule> Schedules { get; set; } = new List<DoctorSchedule>();

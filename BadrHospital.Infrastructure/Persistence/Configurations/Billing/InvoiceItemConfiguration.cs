@@ -15,6 +15,21 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Bil
             builder.Property(ii => ii.Description).IsRequired().HasMaxLength(500);
             builder.Property(ii => ii.UnitPrice).HasColumnType("decimal(18,2)");
             builder.Property(ii => ii.TotalPrice).HasColumnType("decimal(18,2)");
+
+            builder.HasOne(ii => ii.Consultation)
+                    .WithMany()
+                    .HasForeignKey(ii => ii.ConsultationId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(ii => ii.LabOrderItem)
+                .WithMany()
+                .HasForeignKey(ii => ii.LabOrderItemId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(ii => ii.PrescriptionItem)
+                .WithMany()
+                .HasForeignKey(ii => ii.PrescriptionItemId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

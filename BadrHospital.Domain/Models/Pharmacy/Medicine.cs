@@ -11,7 +11,10 @@ namespace HospitalManagementSystem.Domain.Pharmacy
         public string GenericName { get; set; } = string.Empty;
         public string DosageForm { get; set; } = string.Empty; // e.g. Tablet, Syrup, Injection
         public string Strength { get; set; } = string.Empty;
+        //public int StrengthAmount { get; set; } 
+        //public StrnghtUnitEnum StrengthUnit { get; set; }
         public string Manufacturer { get; set; } = string.Empty;
+        public decimal SellingPrice { get; set; } // price charged to patient - distinct from MedicineBatch.PurchasePrice (acquisition cost)
 
         public bool IsDeleted { get; set; }
         public DateTime? DeletedAt { get; set; }
