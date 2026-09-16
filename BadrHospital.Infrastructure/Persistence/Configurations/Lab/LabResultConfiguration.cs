@@ -16,9 +16,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Lab
             builder.Property(r => r.Notes).HasMaxLength(1000);
 
             builder.HasIndex(r => r.LabOrderItemId).IsUnique();
-
-            // TechnicianId intentionally has no FK/navigation - it's a loose
-            // reference to whichever staff table/service owns technician identity.
+            builder.HasIndex(r => r.TechnicianId);
         }
     }
 }

@@ -1,3 +1,5 @@
+using BadrHospital.Domain.Models.Lab;
+using BadrHospital.Domain.Models.Pharmacy;
 using HospitalManagementSystem.Domain.Doctors;
 using HospitalManagementSystem.Domain.Notifications;
 using HospitalManagementSystem.Domain.Patients;
@@ -31,6 +33,8 @@ namespace HospitalManagementSystem.Infrastructure.Identity
         // Navigation - fine here since Infrastructure -> Domain is allowed.
         public Patient? Patient { get; set; }
         public Doctor? Doctor { get; set; }
+        public Pharmacist? Pharmacist { get; set; }
+        public LabTechnician? LabTechnician { get; set; }
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }

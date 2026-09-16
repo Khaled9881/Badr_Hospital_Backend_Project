@@ -1,3 +1,4 @@
+using BadrHospital.Domain.Models.Common;
 using BadrHospital.Domain.Models.Doctors;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
@@ -7,22 +8,11 @@ using HospitalManagementSystem.Domain.Pharmacy;
 
 namespace HospitalManagementSystem.Domain.Doctors
 {
-    public class Doctor : BaseEntity
+    public class Doctor : StaffMember
     {
-        // FK - optional link to portal login (0..1 per ERD).
-        // Plain Guid on purpose - see the note on Patient.ApplicationUserId.
-        public Guid? ApplicationUserId { get; set; }
-
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
         public string LicenseNumber { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
         public int YearsOfExperience { get; set; }
-        public bool IsActive { get; set; } = true;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
         public decimal ConsultationFee { get; set; }
 
         // Navigation

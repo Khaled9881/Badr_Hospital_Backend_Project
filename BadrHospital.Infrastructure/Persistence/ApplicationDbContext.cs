@@ -1,5 +1,7 @@
 using BadrHospital.Domain.Models.Common;
 using BadrHospital.Domain.Models.Doctors;
+using BadrHospital.Domain.Models.Lab;
+using BadrHospital.Domain.Models.Pharmacy;
 using HospitalManagementSystem.Domain.Billing;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
@@ -55,6 +57,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
         public DbSet<LabOrder> LabOrders => Set<LabOrder>();
         public DbSet<LabOrderItem> LabOrderItems => Set<LabOrderItem>();
         public DbSet<LabResult> LabResults => Set<LabResult>();
+        public DbSet<LabTechnician> LabTechnicians => Set<LabTechnician>();
 
         // Billing
         public DbSet<Invoice> Invoices => Set<Invoice>();
@@ -65,6 +68,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
         public DbSet<Notification> Notifications => Set<Notification>();
 
         // Pharmacy / Inventory
+        public DbSet<Pharmacist> Pharmacists => Set<Pharmacist>();
         public DbSet<Medicine> Medicines => Set<Medicine>();
         public DbSet<MedicineBatch> MedicineBatches => Set<MedicineBatch>();
         public DbSet<Prescription> Prescriptions => Set<Prescription>();
