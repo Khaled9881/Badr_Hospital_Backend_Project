@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BadrHospital.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260915074114_initial_migration")]
-    partial class initial_migration
+    [Migration("20260916014039_Initial_Migration")]
+    partial class Initial_Migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,7 +136,10 @@ namespace BadrHospital.Infrastructure.Migrations
 
                     b.HasIndex("PrescriptionItemId");
 
-                    b.ToTable("InvoiceItems", (string)null);
+                    b.ToTable("InvoiceItems", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_InvoiceItem_AtMostOneSource", "(CASE WHEN [ConsultationId] IS NOT NULL THEN 1 ELSE 0 END + CASE WHEN [LabOrderItemId] IS NOT NULL THEN 1 ELSE 0 END + CASE WHEN [PrescriptionItemId] IS NOT NULL THEN 1 ELSE 0 END) <= 1");
+                        });
                 });
 
             modelBuilder.Entity("HospitalManagementSystem.Domain.Billing.Payment", b =>

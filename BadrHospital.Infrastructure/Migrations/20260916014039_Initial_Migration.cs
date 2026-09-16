@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BadrHospital.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial_migration : Migration
+    public partial class Initial_Migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -816,6 +816,7 @@ namespace BadrHospital.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InvoiceItems", x => x.Id);
+                    table.CheckConstraint("CK_InvoiceItem_AtMostOneSource", "(CASE WHEN [ConsultationId] IS NOT NULL THEN 1 ELSE 0 END + CASE WHEN [LabOrderItemId] IS NOT NULL THEN 1 ELSE 0 END + CASE WHEN [PrescriptionItemId] IS NOT NULL THEN 1 ELSE 0 END) <= 1");
                     table.ForeignKey(
                         name: "FK_InvoiceItems_Consultations_ConsultationId",
                         column: x => x.ConsultationId,

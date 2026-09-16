@@ -30,6 +30,12 @@ namespace HospitalManagementSystem.Infrastructure.Persistence.Configurations.Bil
                 .WithMany()
                 .HasForeignKey(ii => ii.PrescriptionItemId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.ToTable(t => t.HasCheckConstraint(
+                    "CK_InvoiceItem_AtMostOneSource",
+                    "(CASE WHEN [ConsultationId] IS NOT NULL THEN 1 ELSE 0 END + " +
+                    "CASE WHEN [LabOrderItemId] IS NOT NULL THEN 1 ELSE 0 END + " +
+                    "CASE WHEN [PrescriptionItemId] IS NOT NULL THEN 1 ELSE 0 END) <= 1"));
         }
     }
 }
