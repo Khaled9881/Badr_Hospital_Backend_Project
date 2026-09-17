@@ -2,12 +2,19 @@
 using BadrHospital.API.Middlewares;
 using BadrHospital.Application.Behaviors;
 using BadrHospital.Application.Common.Exceptions;
+using BadrHospital.Application.Interfaces;
 using BadrHospital.Infrastructure.Identity;
+using BadrHospital.Infrastructure.Services;
 using FluentValidation;
+using HospitalManagementSystem.Infrastructure.Identity;
 using HospitalManagementSystem.Infrastructure.Persistence;
 using HospitalManagementSystem.Infrastructure.Persistence.Seeding;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens.Experimental;
+using System.Text;
 
 namespace BadrHospital.API
 {
@@ -41,6 +48,34 @@ namespace BadrHospital.API
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
             });
+
+            builder.Services
+                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                    };
+                });
+
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddSingleton<IJWTService, JWTService>();
 
 
             var app = builder.Build();
