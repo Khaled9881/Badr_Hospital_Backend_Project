@@ -1,3 +1,4 @@
+using BadrHospital.Application.Interfaces;
 using BadrHospital.Domain.Models.Common;
 using BadrHospital.Domain.Models.Doctors;
 using BadrHospital.Domain.Models.Lab;
@@ -27,7 +28,7 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
     /// RoleClaims). No custom UserRole entity is needed anymore.
     /// </summary>
     public class ApplicationDbContext
-        : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+        : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -152,12 +153,12 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(
+        public override async Task<int> SaveChangesAsync(
             bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
         {
             SoftenDeletes();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }

@@ -16,6 +16,8 @@
 		<Folder Include="Services\Auth\Commands\ResetPassword\" />
 		<Folder Include="Services\Auth\DTOs\" />
 		<Folder Include="Services\Auth\Queries\" />
+		<Folder Include="Services\Patient\DTOs\" />
+		<Folder Include="Services\Patient\Queries\" />
 	</ItemGroup>
 
 	<ItemGroup>

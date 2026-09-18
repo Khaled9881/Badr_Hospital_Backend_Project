@@ -1,6 +1,7 @@
 ﻿using BadrHospital.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace BadrHospital.API.Middlewares
@@ -40,6 +41,25 @@ namespace BadrHospital.API.Middlewares
                 return true;
             }
 
+            if (exception is DbUpdateException dbUpdateException &&
+                dbUpdateException.InnerException is SqlException sqlException &&
+                (sqlException.Number == 2601 || sqlException.Number == 2627))
+            {
+                var friendlyMessage = ExtractFriendlyConstraintMessage(sqlException.Message);
+
+                var conflictProblem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status409Conflict,
+                    Title = "A record with this value already exists.",
+                    Detail = friendlyMessage,
+                    Instance = httpContext.Request.Path
+                };
+
+                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                await httpContext.Response.WriteAsJsonAsync(conflictProblem, cancellationToken);
+                return true;
+            }
+
             var (statusCode, title) = exception switch
             {
                 NotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
@@ -72,5 +92,29 @@ namespace BadrHospital.API.Middlewares
 
             return true;
         }
+
+        // Helper Function
+        private static string ExtractFriendlyConstraintMessage(string sqlMessage)
+        {
+            var fieldMap = new Dictionary<string, string>
+            {
+                ["IX_Patients_PhoneNumber"] = "Phone number is already registered.",
+                ["IX_Patients_MedicalRecordNumber"] = "Medical record number already exists.",
+                ["UserNameIndex"] = "Username is already taken.",
+                ["EmailIndex"] = "Email is already registered.",
+                ["IX_Doctors_LicenseNumber"] = "License number is already registered.",
+                ["IX_Doctors_Email"] = "Email is already registered.",
+                // add more as needed - Pharmacists, LabTechnicians, Invoices.InvoiceNumber, etc.
+            };
+
+            foreach (var (indexName, message) in fieldMap)
+            {
+                if (sqlMessage.Contains(indexName, StringComparison.OrdinalIgnoreCase))
+                    return message;
+            }
+
+            return "A record with this value already exists.";
+        }
+
     }
 }

@@ -44,6 +44,8 @@ namespace BadrHospital.API
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
 
+            builder.Services.AddScoped<IApplicationDbContext>(provider =>
+                    provider.GetRequiredService<ApplicationDbContext>());
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
