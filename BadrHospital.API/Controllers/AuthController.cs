@@ -1,4 +1,5 @@
-﻿using BadrHospital.Application.Services.Auth.Commands.Register;
+﻿using BadrHospital.Application.Services.Auth.Commands.LogIn;
+using BadrHospital.Application.Services.Auth.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,5 +18,18 @@ namespace BadrHospital.API.Controllers
             var token = await _mediator.Send(registerCommand);
             return Ok(token);
         }
+
+        [HttpPost("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LogIn(LoginCommand loginCommand)
+        {
+            var result = await _mediator.Send(loginCommand);
+            if (result.isSignedInSuccessfully)
+                return Ok(result.token);
+
+            return Unauthorized();
+        }
+
+
     }
 }

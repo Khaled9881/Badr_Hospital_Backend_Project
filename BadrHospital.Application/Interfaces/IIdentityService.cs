@@ -9,6 +9,7 @@ namespace BadrHospital.Application.Interfaces
         public Task<bool> FindByNameAsync(string name);
         public Task<(IdentityResult Result, Guid UserId)> CreateUserAsync(string Email, string Password, string userName, string? PhoneNumber);
         public Task<IdentityResult> AddtoRoleAsync(string userId, string role);
+        public Task<(bool, Guid, List<string>?)> SigninAsync(string email, string password);
 
     }
 }

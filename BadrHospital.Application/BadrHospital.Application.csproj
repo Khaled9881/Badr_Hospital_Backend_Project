@@ -11,10 +11,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Services\Auth\Commands\LogIn\" />
 		<Folder Include="Services\Auth\Commands\ForgetPassword\" />
 		<Folder Include="Services\Auth\Commands\ResetPassword\" />
-		<Folder Include="Services\Auth\DTOs\" />
 		<Folder Include="Services\Auth\Queries\" />
 		<Folder Include="Services\Patient\DTOs\" />
 		<Folder Include="Services\Patient\Queries\" />

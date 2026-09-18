@@ -1,11 +1,12 @@
-﻿using BadrHospital.Application.Interfaces;
+﻿using BadrHospital.Application.Common;
+using BadrHospital.Application.Interfaces;
 using HospitalManagementSystem.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
 
 namespace BadrHospital.Infrastructure.Services
 {
-    public class IdentityService(UserManager<ApplicationUser> userManager) : IIdentityService
+    public class IdentityService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IIdentityService
     {
         public async Task<bool> FindByEmailAsync(string email)
         {
@@ -36,6 +37,22 @@ namespace BadrHospital.Infrastructure.Services
         {
             var user = await userManager.FindByIdAsync(userId);
             return await userManager.AddToRoleAsync(user, role);
+        }
+
+        public async Task<(bool, Guid, List<string>?)> SigninAsync(string email, string password)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user is null)
+                return (false, Guid.Empty, new List<string>());
+
+            var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
+            if (!result.Succeeded)
+                return (false, Guid.Empty, new List<string>());
+
+            var roles = await userManager.GetRolesAsync(user);
+
+
+            return (true, user.Id, roles.ToList());
         }
 
     }
