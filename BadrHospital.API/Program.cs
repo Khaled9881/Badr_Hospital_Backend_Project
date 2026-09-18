@@ -50,8 +50,9 @@ namespace BadrHospital.API
             });
 
             builder.Services
-                .AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -75,7 +76,10 @@ namespace BadrHospital.API
 
             builder.Services.AddAuthorization();
 
-            builder.Services.AddSingleton<IJWTService, JWTService>();
+            builder.Services.AddScoped<IJWTService, JWTService>();
+
+            builder.Services.AddScoped<IIdentityService, IdentityService>();
+            builder.Services.AddScoped<ITransactionManager, TransactionManager>();
 
 
             var app = builder.Build();

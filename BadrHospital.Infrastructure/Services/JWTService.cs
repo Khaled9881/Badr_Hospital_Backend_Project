@@ -30,6 +30,12 @@ namespace BadrHospital.Infrastructure.Services
             foreach (var role in tokenRequest.Roles)
                 claims.Add(new Claim(ClaimTypes.Role, role));
 
+            //        var jwtKey = _config["Jwt:Key"]
+            //          ??  throw new InvalidOperationException("Jwt:Key is not  configured.");
+            //        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            //        var expireMinutesRaw = _config["Jwt:ExpireMinutes"]
+            //            ?? throw new InvalidOperationException("Jwt:ExpireMinutes is not configured.");
+
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
