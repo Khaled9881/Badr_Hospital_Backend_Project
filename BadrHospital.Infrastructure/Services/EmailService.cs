@@ -35,4 +35,3 @@ namespace BadrHospital.Infrastructure.Services
             => System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
     }
 }
-}

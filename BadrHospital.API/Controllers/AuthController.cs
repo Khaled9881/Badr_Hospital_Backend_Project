@@ -36,8 +36,8 @@ namespace BadrHospital.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordCommand forgetPasswordCommand)
         {
-            var resetToken = await _mediator.Send(forgetPasswordCommand);
-            return Ok(resetToken);
+            await _mediator.Send(forgetPasswordCommand);
+            return Ok(new { message = "If an account with that email exists, a reset link has been sent." });
         }
 
         [HttpPost("Reset_Password")]
