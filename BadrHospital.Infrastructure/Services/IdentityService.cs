@@ -55,5 +55,31 @@ namespace BadrHospital.Infrastructure.Services
             return (true, user.Id, roles.ToList());
         }
 
+        public async Task<string> ForgetPassword(Guid id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user is null)
+                return string.Empty;
+
+            return await userManager.GeneratePasswordResetTokenAsync(user);
+
+        }
+
+        public async Task<IdentityResult> ResetPassword(Guid id, string resetToken, string newPassword)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user is null)
+                return IdentityResult.Failed(new IdentityError { Description = "Invalid request." });
+
+            return await userManager.ResetPasswordAsync(user, resetToken, newPassword);
+        }
+
+        public async Task<Guid> GetUserIdByEmailAsync(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user is null)
+                return Guid.Empty;
+            return user.Id;
+        }
     }
 }

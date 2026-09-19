@@ -1,5 +1,7 @@
-﻿using BadrHospital.Application.Services.Auth.Commands.LogIn;
+﻿using BadrHospital.Application.Services.Auth.Commands.ForgetPassword;
+using BadrHospital.Application.Services.Auth.Commands.LogIn;
 using BadrHospital.Application.Services.Auth.Commands.Register;
+using BadrHospital.Application.Services.Auth.Commands.ResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,13 +23,29 @@ namespace BadrHospital.API.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LogIn(LoginCommand loginCommand)
+        public async Task<IActionResult> LogIn([FromBody] LoginCommand loginCommand)
         {
             var result = await _mediator.Send(loginCommand);
             if (result.isSignedInSuccessfully)
                 return Ok(result.token);
 
             return Unauthorized();
+        }
+
+        [HttpPost("Forget Password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordCommand forgetPasswordCommand)
+        {
+            var resetToken = await _mediator.Send(forgetPasswordCommand);
+            return Ok(resetToken);
+        }
+
+        [HttpPost("Reset Password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand resetPasswordCommand)
+        {
+            await _mediator.Send(resetPasswordCommand);
+            return Ok();
         }
 
 
