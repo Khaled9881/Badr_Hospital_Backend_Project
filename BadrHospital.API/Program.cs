@@ -82,7 +82,7 @@ namespace BadrHospital.API
 
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<ITransactionManager, TransactionManager>();
-
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             var app = builder.Build();
 

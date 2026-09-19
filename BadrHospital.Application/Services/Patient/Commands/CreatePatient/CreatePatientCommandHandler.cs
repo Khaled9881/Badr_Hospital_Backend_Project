@@ -17,10 +17,10 @@ namespace BadrHospital.Application.Services.Patient.Commands.CreatePatient
         public async Task<string> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
         {
 
-            if (await identityService.FindByEmailAsync(request.Email))
+            if (await identityService.ExistsByEmailAsync(request.Email))
                 throw new ValidationException(new List<ValidationFailure>() { new ValidationFailure("Email", "Email is Already Existed") }
                 );
-            if (await identityService.FindByNameAsync(request.userName))
+            if (await identityService.ExistsByNameAsync(request.userName))
                 throw new ValidationException(new List<ValidationFailure>() { new ValidationFailure("UserName", "User name is already taken") });
 
 

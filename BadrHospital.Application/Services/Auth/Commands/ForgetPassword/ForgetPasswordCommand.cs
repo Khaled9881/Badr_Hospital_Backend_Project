@@ -5,5 +5,5 @@ using System.Text;
 
 namespace BadrHospital.Application.Services.Auth.Commands.ForgetPassword
 {
-    public record ForgetPasswordCommand(string Email) : IRequest<string>;
+    public record ForgetPasswordCommand(string Email) : IRequest;
 }

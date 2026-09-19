@@ -32,7 +32,7 @@ namespace BadrHospital.API.Controllers
             return Unauthorized();
         }
 
-        [HttpPost("Forget Password")]
+        [HttpPost("Forget_Password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordCommand forgetPasswordCommand)
         {
@@ -40,7 +40,7 @@ namespace BadrHospital.API.Controllers
             return Ok(resetToken);
         }
 
-        [HttpPost("Reset Password")]
+        [HttpPost("Reset_Password")]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand resetPasswordCommand)
         {

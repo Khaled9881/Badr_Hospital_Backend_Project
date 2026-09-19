@@ -8,13 +8,13 @@ namespace BadrHospital.Infrastructure.Services
 {
     public class IdentityService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IIdentityService
     {
-        public async Task<bool> FindByEmailAsync(string email)
+        public async Task<bool> ExistsByEmailAsync(string email)
         {
             var user = await userManager.FindByEmailAsync(email);
             return user != null;
         }
 
-        public async Task<bool> FindByNameAsync(string name)
+        public async Task<bool> ExistsByNameAsync(string name)
         {
             var user = await userManager.FindByNameAsync(name);
             return user != null;
@@ -36,6 +36,8 @@ namespace BadrHospital.Infrastructure.Services
         public async Task<IdentityResult> AddtoRoleAsync(string userId, string role)
         {
             var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return IdentityResult.Failed(new IdentityError { Description = "User not found." });
             return await userManager.AddToRoleAsync(user, role);
         }
 
