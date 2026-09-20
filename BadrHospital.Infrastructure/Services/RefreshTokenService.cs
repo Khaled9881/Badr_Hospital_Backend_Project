@@ -106,5 +106,7 @@ namespace BadrHospital.Infrastructure.Services
             var bytes = SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(token));
             return Convert.ToBase64String(bytes);
         }
+
+        // I forgot to mention Refresh Token Serivce Added in the last committ
     }
 }
