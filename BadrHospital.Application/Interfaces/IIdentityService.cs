@@ -8,11 +8,15 @@ namespace BadrHospital.Application.Interfaces
         public Task<bool> ExistsByEmailAsync(string email);
         public Task<bool> ExistsByNameAsync(string name);
         public Task<Guid> GetUserIdByEmailAsync(string email);
+        public Task<string> GetUserEmailByIdAsync(string id);
+        public Task<List<string>?> GetUserRolesByIdAsync(string id);
         public Task<(IdentityResult Result, Guid UserId)> CreateUserAsync(string Email, string Password, string userName, string? PhoneNumber);
         public Task<IdentityResult> AddtoRoleAsync(string userId, string role);
         public Task<(bool, Guid, List<string>?)> SigninAsync(string email, string password);
 
         public Task<string> ForgetPassword(Guid id);
         public Task<IdentityResult> ResetPassword(Guid id, string resetToken, string newPassword);
+
+        public Task<IdentityResult> ChangePasswordAsync(string userId, string currentPassword, string newPassword);
     }
 }

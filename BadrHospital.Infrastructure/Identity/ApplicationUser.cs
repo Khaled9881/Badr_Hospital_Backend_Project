@@ -1,5 +1,6 @@
 using BadrHospital.Domain.Models.Lab;
 using BadrHospital.Domain.Models.Pharmacy;
+using BadrHospital.Infrastructure.Identity;
 using HospitalManagementSystem.Domain.Doctors;
 using HospitalManagementSystem.Domain.Notifications;
 using HospitalManagementSystem.Domain.Patients;
@@ -36,5 +37,6 @@ namespace HospitalManagementSystem.Infrastructure.Identity
         public Pharmacist? Pharmacist { get; set; }
         public LabTechnician? LabTechnician { get; set; }
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }

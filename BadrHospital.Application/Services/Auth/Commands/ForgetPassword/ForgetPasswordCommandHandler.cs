@@ -3,10 +3,6 @@ using BadrHospital.Application.Interfaces;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
 
 namespace BadrHospital.Application.Services.Auth.Commands.ForgetPassword
 {
@@ -25,7 +21,7 @@ namespace BadrHospital.Application.Services.Auth.Commands.ForgetPassword
             //await emailService.SendAsync(request.Email, "Reset your password",
             //    $"<p>Click <a href='{resetLink}'>here</a> to reset your password.</p>");
 
-            // Using this Approach for Testing Purpises
+            // Using this Approach for Testing Purpises !!!!!!!!!!!!!!!!!!!!!!
             await emailService.SendAsync(request.Email, "Reset your password",
                 $"<p>Here are the Reset Token \n{token}</p>");
         }

@@ -3,6 +3,7 @@ using BadrHospital.Domain.Models.Common;
 using BadrHospital.Domain.Models.Doctors;
 using BadrHospital.Domain.Models.Lab;
 using BadrHospital.Domain.Models.Pharmacy;
+using BadrHospital.Infrastructure.Identity;
 using HospitalManagementSystem.Domain.Billing;
 using HospitalManagementSystem.Domain.Clinical;
 using HospitalManagementSystem.Domain.Common;
@@ -34,6 +35,9 @@ namespace HospitalManagementSystem.Infrastructure.Persistence
             : base(options)
         {
         }
+
+        // Identity
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         // Patients
         public DbSet<Patient> Patients => Set<Patient>();

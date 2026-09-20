@@ -9,6 +9,7 @@ namespace BadrHospital.Application.Services.Auth.DTOs
         public bool isSignedInSuccessfully { get; set; }
         public string? FailureMessage { get; set; }
         public string? token { get; set; }
+        public string? RefreshToken { get; set; }
 
     }
 }

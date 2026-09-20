@@ -1,11 +1,16 @@
-﻿using BadrHospital.Application.Services.Auth.Commands.ForgetPassword;
+﻿using BadrHospital.Application.Services.Auth.Commands.ChangePassword;
+using BadrHospital.Application.Services.Auth.Commands.ForgetPassword;
 using BadrHospital.Application.Services.Auth.Commands.LogIn;
+using BadrHospital.Application.Services.Auth.Commands.RefreshToken;
 using BadrHospital.Application.Services.Auth.Commands.Register;
 using BadrHospital.Application.Services.Auth.Commands.ResetPassword;
+using BadrHospital.Application.Services.Auth.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BadrHospital.API.Controllers
 {
@@ -26,10 +31,18 @@ namespace BadrHospital.API.Controllers
         public async Task<IActionResult> LogIn([FromBody] LoginCommand loginCommand)
         {
             var result = await _mediator.Send(loginCommand);
-            if (result.isSignedInSuccessfully)
-                return Ok(result.token);
+            if (!result.isSignedInSuccessfully)
+                return Unauthorized();
 
-            return Unauthorized();
+            Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            });
+
+            return Ok(new { accessToken = result.token });
         }
 
         [HttpPost("Forget_Password")]
@@ -46,6 +59,40 @@ namespace BadrHospital.API.Controllers
         {
             await _mediator.Send(resetPasswordCommand);
             return Ok();
+        }
+
+        [HttpPost("refresh-token")]
+        [AllowAnonymous]
+        public async Task<ActionResult<AuthResult>> RefreshToken(RefreshTokenCommand command)
+        {
+            var rawToken = Request.Cookies["refreshToken"];
+            if (string.IsNullOrEmpty(rawToken))
+                return Unauthorized();
+
+            var result = await _mediator.Send(new RefreshTokenCommand(rawToken));
+
+            Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            });
+
+            return Ok(new { accessToken = result.AccessToken });
+        }
+
+        [HttpPost("Change_Password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassowrd([FromBody] ChangePasswordDto changePasswordDto)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("Invalid token: missing user identifier.");
+
+            var command = new ChangePasswordCommand(userId, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+            await _mediator.Send(command);
+            return Ok("Password Changed Successfully.");
         }
 
 

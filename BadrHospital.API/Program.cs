@@ -79,6 +79,7 @@ namespace BadrHospital.API
             builder.Services.AddAuthorization();
 
             builder.Services.AddScoped<IJWTService, JWTService>();
+            builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<ITransactionManager, TransactionManager>();

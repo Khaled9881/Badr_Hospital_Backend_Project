@@ -5,7 +5,7 @@ using MediatR;
 
 namespace BadrHospital.Application.Services.Auth.Commands.LogIn
 {
-    public class LoginCommandHandler(IIdentityService identityService, IJWTService jWTService) : IRequestHandler<LoginCommand, LoginResultDTO>
+    public class LoginCommandHandler(IIdentityService identityService, IJWTService jWTService, IRefreshTokenService refreshTokenService) : IRequestHandler<LoginCommand, LoginResultDTO>
     {
         public async Task<LoginResultDTO> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
@@ -20,7 +20,7 @@ namespace BadrHospital.Application.Services.Auth.Commands.LogIn
                 };
             }
 
-            var token = jWTService.CreateToken(
+            var accessToken = jWTService.CreateToken(
                 new TokenRequest()
                 {
                     UserId = id.ToString(),
@@ -28,10 +28,14 @@ namespace BadrHospital.Application.Services.Auth.Commands.LogIn
                     Roles = roles
                 });
 
+            var refreshToken = await refreshTokenService.GenerateAsync(id, cancellationToken);
+
+
             return new LoginResultDTO()
             {
                 isSignedInSuccessfully = isSignedInSuccessfully,
-                token = token
+                token = accessToken,
+                RefreshToken = refreshToken
             };
 
         }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BadrHospital.Application.Services.Auth.Commands.ResetPassword
 {
-    public class ResetPasswordCommandHandler(IIdentityService identityService) : IRequestHandler<ResetPasswordCommand>
+    public class ResetPasswordCommandHandler(IIdentityService identityService, IRefreshTokenService refreshTokenService) : IRequestHandler<ResetPasswordCommand>
     {
 
         public async Task Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
@@ -22,7 +22,7 @@ namespace BadrHospital.Application.Services.Auth.Commands.ResetPassword
             if (!result.Succeeded)
                 throw new ValidationException(new List<ValidationFailure>() { new ValidationFailure("Reset", "Password Reset Failed") });
 
-
+            await refreshTokenService.RevokeAllForUserAsync(userId, cancellationToken);
         }
     }
 }
